@@ -10,7 +10,7 @@ for i in range(n):
 min_cost = [float("inf")]
 
 
-def search(path, cur=None, t_cost=0):
+def search(path, visited, cur=None, t_cost=0):
     if len(path) == n:
         back_cost = costs[cur][path[0]]
 
@@ -22,11 +22,13 @@ def search(path, cur=None, t_cost=0):
     for i in range(n):
         cost = costs[cur][i] if cur is not None else -1
 
-        if i in path or cost == 0:
+        if i in visited or cost == 0:
             continue
 
-        search(path + [i], i, t_cost + max(cost, 0))
+        visited.add(i)
+        search(path + [i], visited, i, t_cost + max(cost, 0))
+        visited.remove(i)
 
 
-search([])
+search([], set())
 print(min_cost[0])
