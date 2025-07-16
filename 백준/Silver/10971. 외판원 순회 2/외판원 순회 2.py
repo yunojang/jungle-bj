@@ -1,34 +1,37 @@
 import sys
 
 n = int(sys.stdin.readline())
-
 costs = []
 
-for i in range(n):
+for _ in range(n):
     costs.append(list(map(int, sys.stdin.readline().split(" "))))
 
-min_cost = [float("inf")]
+
+min_cost = float("inf")
 
 
-def search(path, visited, cur=None, t_cost=0):
+def move(path, cur=None, cost=0):
+    global min_cost
     if len(path) == n:
         back_cost = costs[cur][path[0]]
-
         if back_cost == 0:
             return
 
-        min_cost[0] = min(t_cost + back_cost, min_cost[0])
+        min_cost = min(min_cost, cost + back_cost)
+        return
 
     for i in range(n):
-        cost = costs[cur][i] if cur is not None else -1
+        # 제약조건
+        is_block = cur is not None and costs[cur][i] == 0
+        # 효율 - 백트래킹
+        new_cost = cost + (costs[cur][i] if cur is not None else 0)
+        is_over_cost = new_cost > min_cost
 
-        if i in visited or cost == 0:
+        if i in path or is_block or is_over_cost:
             continue
 
-        visited.add(i)
-        search(path + [i], visited, i, t_cost + max(cost, 0))
-        visited.remove(i)
+        move(path + [i], i, new_cost)
 
 
-search([], set())
-print(min_cost[0])
+move([])
+print(min_cost)
