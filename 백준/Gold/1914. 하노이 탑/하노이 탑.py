@@ -1,17 +1,16 @@
-import sys
-n = int(sys.stdin.readline())
-write = sys.stdout.write
+n = int(input())
 
 
-def hanoi(n, s=1, e=3 ):
-    if (n==0): 
-        return 0
+def hanoi(n, source=1, target=3, remain=2):
+    if n == 1:
+        print(source, target)
+        return
 
-    remain = 6 - s - e # 1+2+3 = 6
-    hanoi(n-1, s, remain, )
-    print(s, e)
-    hanoi(n-1, remain, e, )
+    hanoi(n - 1, source, remain, target)
+    print(source, target)
+    hanoi(n - 1, remain, target, source)
 
-print(2**n -1)
-if (n<=20):
-    hanoi(n,1,3)
+
+print(2**n - 1)
+if n <= 20:
+    hanoi(n)
