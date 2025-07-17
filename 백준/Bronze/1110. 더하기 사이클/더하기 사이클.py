@@ -1,7 +1,5 @@
 import sys
 
-n = int(sys.stdin.readline())
-
 
 def new_num(num):
     left = num // 10
@@ -9,8 +7,10 @@ def new_num(num):
     sum = left + right
     sum_right = sum % 10
 
-    return int(str(right) + str(sum_right))
+    return right * 10 + sum_right
 
+
+n = int(sys.stdin.readline())
 
 cnt = 1
 num = new_num(n)
