@@ -10,9 +10,6 @@ def sum(sum_v=0, start=0):
     if sum_v == s and start != 0:
         cnt += 1
 
-    if start == n:
-        return
-
     for i in range(start, n):
         sum(sum_v + nums[i], i + 1)
 
