@@ -1,4 +1,3 @@
-# n * n 크기 종이가 모두 같은 색 종이라면,
 import sys
 
 n = int(sys.stdin.readline())
