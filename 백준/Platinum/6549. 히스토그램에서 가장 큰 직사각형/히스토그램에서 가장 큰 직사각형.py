@@ -13,8 +13,7 @@ def get_max_rect(hs):
             max_h = max(max_h, width * hs[poped_idx])
         mono_inc.append(i)
     for idx in mono_inc:
-        l = len(hs) - idx
-        max_h = max(max_h, l * hs[idx])
+        max_h = max(max_h, len(hs) * hs[idx])
     return max_h
 
 
