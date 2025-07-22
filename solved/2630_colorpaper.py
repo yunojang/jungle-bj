@@ -10,7 +10,7 @@ for _ in range(n):
 cnt = [0, 0]
 
 
-# sy,sx부터 n거리의 정사각형이 색이 같으면, cnt를 증가한다.
+# sy,sx부터 n거리의 정사각형이 색이 같으면, cnt를 증가한다. 다르면 분할
 def color_count(n, sy=0, sx=0):
     cur_color = paper[sy][sx]
     same = True

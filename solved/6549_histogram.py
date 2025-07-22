@@ -2,13 +2,16 @@ import sys
 
 inputs = sys.stdin.readlines()
 
-
-# 주어진 높이들로, 만들 수 있는 최대 넓이 반환
 def get_max_rect(hs):
     max_h = 0
-    up_stack = []
+    mono_inc= []
+    
     for i in range(len(hs)):
-        up_stack.append(i)
+        while mono_inc and hs[mono_inc[-1]] > hs[i]:
+            poped_idx = mono_inc.pop()
+            width = i if not mono_inc else i - mono_inc[-1] - 1
+            max_h = max(max_h, width * hs[poped_idx])
+        mono_inc.append(i)
     return max_h
 
 
