@@ -6,24 +6,26 @@ from collections import deque
 tn = int(input())
 
 def get_order(docs, idx):
-    d = deque()
+    q = deque()
     h = []
 
     for i in range(len(docs)):
-        d.append(i)
+        q.append(i)
         heapq.heappush(h, -docs[i])
 
-    order = []
-
-    while d:
-        if -h[0] > docs[d[0]]:
-            d.append(d.popleft())
+    # order = []
+    cnt = 1
+    while q:
+        if -h[0] > docs[q[0]]:
+            q.append(q.popleft())
         else:
-            i = d.popleft()
+            i = q.popleft()
             heapq.heappop(h)
-            order.append(i)
-            
-    return order.index(idx) + 1
+            if idx == i:
+                return cnt
+            cnt+=1
+    #         order.append(i)
+    # return order.index(idx) + 1
 
     
 for _ in range(tn):
