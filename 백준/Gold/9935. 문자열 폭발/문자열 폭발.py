@@ -9,7 +9,7 @@ stack = []
 
 for c in s:
     stack.append(c)
-    while len(stack) >= explode_l and ("".join(stack[len(stack)-explode_l:]) == explode_s):
+    while stack and ("".join(stack[len(stack)-explode_l:]) == explode_s):
         for _ in range(explode_l):
             stack.pop()
 
