@@ -1,33 +1,31 @@
-input = input()
+paren = str(input())
 
-pair = {")": "(", "]": "["}
-point = {")": 2, "]": 3}
+pair = {")":"(", "]": "["}
+scores = {")":2, "]": 3}
 
+stack = []
 
-def get_v(str):
-    stack = []
-
-    for c in str:
-        if c in pair:
-            s = 0
-            # 숫자 모두 빼기
+def get_score(paren):
+    for p in paren:
+        if p in pair:
+            # 괄호 내에 들어가 있는 점수 모두 빼며 누산
+            sum = 0
             while stack and isinstance(stack[-1], int):
-                s += stack.pop()
-            # 짝 맞나 확인
-            if not stack or stack.pop() != pair[c]:
+                sum += stack.pop()
+            # 괄호 쌍 안맞으면 0점 종료
+            if not stack or stack[-1] != pair[p]:
                 return 0
-            # 계산된 값 넣기
-            stack.append(s * point[c] if s else point[c])
+            stack.pop()
+            # 계산된 점수 넣기
+            paren_score = scores[p]
+            stack.append(sum * paren_score if sum else paren_score)
         else:
-            stack.append(c)
-
+            stack.append(p)
     t = 0
-    for item in stack:
-        if not isinstance(item, int):
+    for remain in stack:
+        if not isinstance(remain, int):
             return 0
-        else:
-            t += item
+        t += remain
     return t
 
-
-print(get_v(input))
+print(get_score(paren))
