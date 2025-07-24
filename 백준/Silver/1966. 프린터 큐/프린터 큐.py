@@ -1,4 +1,5 @@
 import sys
+import heapq
 input = sys.stdin.readline
 from collections import deque
 
@@ -6,21 +7,24 @@ tn = int(input())
 
 def get_order(docs, idx):
     d = deque()
+    h = []
 
     for i in range(len(docs)):
         d.append(i)
+        heapq.heappush(h, -docs[i])
 
-    order = 1
+    order = []
+
     while d:
-        if any([docs[idx] > docs[d[0]] for idx in d]):
+        if -h[0] > docs[d[0]]:
             d.append(d.popleft())
         else:
             i = d.popleft()
-            if i == idx:
-                return order
-            order += 1 
+            heapq.heappop(h)
+            order.append(i)
+            
+    return order.index(idx) + 1
 
-    
     
 for _ in range(tn):
     n, m = tuple(map(int, input().split()))
