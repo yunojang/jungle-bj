@@ -1,24 +1,13 @@
-import sys
-
-n = int(sys.stdin.readline())
-cards = list(map(int, sys.stdin.readline().split()))
-
-m = int(sys.stdin.readline())
-nums = list(map(int, sys.stdin.readline().split()))
-
-cards.sort()
-
-def has_card(cards, target, s, e):
-    if s>=e:
-        return False
-    mid = (s+e) // 2
-    if cards[mid] == target:
-        return True
-    elif cards[mid] < target:
-        return has_card(cards,target, mid+1, e) 
+n = int(input())
+A = list(map(int, input().split()))
+is_a = dict()
+for num in A:
+    is_a[num] = True
+m = int(input())
+B = list(map(int, input().split()))
+rst = []
+for num in B:
+    if is_a.get(num):
+        print(1, end=' ')
     else:
-        return has_card(cards,target, s, mid) 
-
-
-for num in nums:
-    print(1 if has_card(cards, num, 0, len(cards)) else 0)
+        print(0, end=' ')
