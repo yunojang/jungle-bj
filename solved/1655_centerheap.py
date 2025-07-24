@@ -1,11 +1,23 @@
 import heapq
 import sys
 
-h = []
 n = int(sys.stdin.readline())
 nums = list(map(int, sys.stdin.readlines()))
+min_h = []
+max_h = [-nums[0]]
+print(nums[0])
 
-for i in range(n):
-    heapq.heappush(h, nums[i])
-    mid = i // 2  # 이 인덱스와 같은레벨
-    print(mid, h)
+for num in nums[1:]:
+    if -max_h[0] > num:
+        heapq.heappush(max_h, -num)
+    else:
+        heapq.heappush(min_h, num)
+
+    if len(max_h) < len(min_h):
+        heapq.heappush(max_h, -heapq.heappop(min_h))
+    
+    if len(max_h) > len(min_h) + 1:
+        heapq.heappush(min_h, -heapq.heappop(max_h))
+
+    print(-max_h[0])
+
