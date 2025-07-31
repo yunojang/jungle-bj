@@ -23,22 +23,23 @@ for u, v in edges:
 
 visited = [False] * (n + 1)
 for i in range(1, n + 1):
-    if a[i] == 0 and not visited[i]:
-        q = deque([i])
-        visited[i] = True
-        in_set = set()
+    if a[i] == 1 or visited[i]:
+        continue
+    q = deque([i])
+    visited[i] = True
+    in_set = set()
 
-        while q:
-            x = q.popleft()
-            for adj in graph[x]:
-                if a[adj] == 0 and not visited[adj]:
-                    visited[adj] = True
-                    q.append(adj)
-                elif a[adj] == 1:
-                    in_set.add(adj)
+    while q:
+        x = q.popleft()
+        for adj in graph[x]:
+            if a[adj] == 0 and not visited[adj]:
+                visited[adj] = True
+                q.append(adj)
+            elif a[adj] == 1:
+                in_set.add(adj)
 
-        k = len(in_set)
-        total_route += k * (k - 1)
+    k = len(in_set)
+    total_route += k * (k - 1)
 
 print(total_route)
 
