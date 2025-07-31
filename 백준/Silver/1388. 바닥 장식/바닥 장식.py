@@ -14,20 +14,16 @@ hd = [(0, 1), (0, -1)]
 
 
 def check_same(y, x):
-    if maps[y][x] == "|":
-        for dy, dx in vd:
-            ny, nx = y + dy, x + dx
-            if ny < 0 or ny >= n or maps[ny][nx] == "-" or visited[ny][nx]:
-                continue
-            visited[ny][nx] = True
-            check_same(ny, nx)
-    else:
-        for dy, dx in hd:
-            ny, nx = y + dy, x + dx
-            if nx < 0 or nx >= m or maps[ny][nx] == "|" or visited[ny][nx]:
-                continue
-            visited[ny][nx] = True
-            check_same(ny, nx)
+    dirs = vd if maps[y][x] == "|" else hd
+
+    for dy, dx in dirs:
+        ny, nx = y + dy, x + dx
+        if ny < 0 or ny >= n or nx < 0 or nx >= m:
+            continue
+        if maps[ny][nx] != maps[y][x] or visited[ny][nx]:
+            continue
+        visited[ny][nx] = True
+        check_same(ny, nx)
 
 
 for i in range(n):
