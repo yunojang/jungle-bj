@@ -14,10 +14,19 @@ for i in range(k):
     if len(plug) < n:
         plug.append(cur)
     else:
-        plug.sort(
-            key=lambda p: ps.index(p, i + 1) if p in ps[i + 1 :] else float("inf")
-        )
-        plug.pop()
+        last_idx = -1
+        out = None
+
+        for p in plug:
+            try:
+                idx = ps.index(p, i + 1)
+            except ValueError:
+                idx = float("inf")
+            if idx > last_idx:
+                last_idx = idx
+                out = p
+
+        plug.remove(out)
         plug.append(cur)
         cnt += 1
 
