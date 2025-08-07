@@ -1,26 +1,23 @@
-# dp 풀이
-# dp[pos][jump] - pos에 jump 거리로 도착 했을 때 최소 이동
 import sys
-from collections import deque
 
 input = sys.stdin.readline
+n, m = tuple(map(int, input().split()))
+banned = set([int(input()) for _ in range(m)])
 
-n, m = map(int, input().split())
-stone = set(int(input()) for _ in range(m))
-
-max_jump = int((2 * n) ** 0.5) + 2
-dp = [[float("inf")] * (max_jump + 1) for _ in range(n + 1)]
+max_k = int((2 * n) ** 0.5)
+INF = float("inf")
+dp = [[INF] * (max_k + 1) for _ in range(n + 1)]
 dp[1][0] = 0
 
-for pos in range(1, n + 1):
-    for x in range(max_jump + 1):
-        if dp[pos][x] == float("inf"):  # pos에 x점프로 도달한적 없음
+for i in range(1, n + 1):
+    for j in range(max_k + 1):
+        if dp[i][j] == INF:
             continue
-        for nj in (x - 1, x, x + 1):
-            np = pos + nj
-            if 1 <= np and np <= n and np not in stone:
-                dp[np][nj] = min(dp[np][nj], dp[pos][x] + 1)
+        for nj in (j - 1, j, j + 1):
+            np = i + nj
+            if nj < 1 or np in banned or np > n:
+                continue
+            dp[np][nj] = min(dp[np][nj], dp[i][j] + 1)
 
-print(dp)
-result = min(dp[n])
-print(result if result != float("inf") else -1)
+res = min(dp[n])
+print(res if res != INF else -1)
