@@ -14,7 +14,7 @@ picked = [0] * n
 used = [False] * n
 
 
-# depth 부터, 모든 순열 조합을
+# depth 부터 이후까지, 모든 순열을 탐색하며 최대값을 갱신
 def search(depth):
     global best
     if depth == n:
