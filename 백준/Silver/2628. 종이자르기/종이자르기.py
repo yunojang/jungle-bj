@@ -5,23 +5,15 @@ input = sys.stdin.readline
 w, h = list(map(int, input().split()))
 n = int(input())
 cuts = [list(map(int, input().split())) for _ in range(n)]
-x_cuts = [0, h]
-y_cuts = [0, w]
+x_cuts, y_cuts = [0, h], [0, w]
+
+
+def max_gap(cuts):
+    cuts.sort()
+    return max(b - a for a, b in zip(cuts, cuts[1:]))
+
 
 for is_y, pos in cuts:
-    if is_y:
-        y_cuts.append(pos)
-    else:
-        x_cuts.append(pos)
-x_cuts.sort()
-y_cuts.sort()
+    (y_cuts if is_y else x_cuts).append(pos)
 
-xmax = 0
-ymax = 0
-for x1, x2 in zip(x_cuts, x_cuts[1:]):
-    xmax = max(xmax, x2 - x1)
-for y1, y2 in zip(y_cuts, y_cuts[1:]):
-    ymax = max(ymax, y2 - y1)
-
-
-print(xmax * ymax)
+print(max_gap(x_cuts) * max_gap(y_cuts))
