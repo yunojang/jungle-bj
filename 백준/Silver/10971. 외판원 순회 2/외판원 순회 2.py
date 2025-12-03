@@ -1,37 +1,32 @@
 import sys
+from math import inf
 
-n = int(sys.stdin.readline())
-costs = []
-
-for _ in range(n):
-    costs.append(list(map(int, sys.stdin.readline().split(" "))))
-
-
-min_cost = float("inf")
+input = sys.stdin.readline
+n = int(input())
+maps = [list(map(int, input().split())) for _ in range(n)]
+best = inf
+visited = [False] * n
 
 
-def move(path, cur=None, cost=0):
-    global min_cost
-    if len(path) == n:
-        back_cost = costs[cur][path[0]]
-        if back_cost == 0:
-            return
-
-        min_cost = min(min_cost, cost + back_cost)
+def dfs(depth, cur, start, cost=0):
+    global best
+    if depth == n - 1:
+        if maps[cur][start] > 0:
+            best = min(best, cost + maps[cur][start])
         return
 
-    for i in range(n):
-        # 제약조건
-        is_block = cur is not None and costs[cur][i] == 0
-        # 효율 - 백트래킹
-        new_cost = cost + (costs[cur][i] if cur is not None else 0)
-        is_over_cost = new_cost > min_cost
-
-        if i in path or is_block or is_over_cost:
+    for next in range(n):
+        cur_cost = maps[cur][next]
+        if visited[next] or next == start or cur_cost == 0 or cost + cur_cost > best:
             continue
+        visited[next] = True
+        dfs(depth + 1, next, start, cost + cur_cost)
+        visited[next] = False
 
-        move(path + [i], i, new_cost)
 
+for start in range(n):
+    visited[start] = True
+    dfs(0, start, start)
+    visited[start] = False
 
-move([])
-print(min_cost)
+print(best)
