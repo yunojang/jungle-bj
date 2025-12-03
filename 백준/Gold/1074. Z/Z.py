@@ -1,30 +1,26 @@
-n, r, c = list(map(int, input().split(" ")))
+import sys
 
-orders = [(0, 0), (0, 1), (1, 0), (1, 1)]
+input = sys.stdin.readline
+N, r, c = list(map(int, input().split()))
 
-count = 0
 
-
-def search(n, y, x):
-    global count
-
-    if y == r and x == c:
-        print(count)
-        return True
+def z_order(n, y, x, offset):
     if n == 0:
-        count += 1  # n이 0이 되어, 1개의 값을 검색하는 시점에서
-        return False
+        return offset
 
-    for dy, dx in orders:
-        unit = 2 ** (n - 1)
-        ny, nx = y + dy * unit, x + dx * unit
+    half = 1 << (n - 1)
+    q_size = half**2
 
-        if ny > r or nx > c or ny + unit <= r or nx + unit <= c:
-            count += unit * unit
-            continue
+    quad = 0
+    if r >= y + half:
+        quad += 2
+        y += half
+    if c >= x + half:
+        quad += 1
+        x += half
 
-        if search(n - 1, ny, nx):
-            return True
+    offset += quad * q_size
+    return z_order(n - 1, y, x, offset)
 
 
-search(n, 0, 0)
+print(z_order(N, 0, 0, 0))
