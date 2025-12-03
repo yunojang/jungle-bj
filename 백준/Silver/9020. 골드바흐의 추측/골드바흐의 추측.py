@@ -1,29 +1,27 @@
 import sys
 import math
 
-inputs = sys.stdin.readlines()
-t = int(inputs[0])
-nums = list(map(int, inputs[1:]))
+input = sys.stdin.readline
+n = int(input())
+nums = [int(input()) for _ in range(n)]
+
 
 def is_prime(n):
-    if n <2:
-        return False
-    if n == 2:
-        return True
-    for i in range(2, math.ceil(math.sqrt(n)) + 1):
+    for i in range(2, math.isqrt(n) + 1):
         if n % i == 0:
             return False
     return True
 
 
-def gold(n):
-    for i in range(int(n/2), 1, -1):
-        if is_prime(i) and is_prime(n-i): 
-            return (i , n-i)
-    return (0,0)
+def get_gold(num):
+    start = num // 2
+    for diff in range(start):
+        a = start - diff
+        b = start + diff
+        if is_prime(a) and is_prime(b):
+            return (a, b)
+    return (0, 0)
 
 
 for num in nums:
-    x,y = gold(num)
-    print(f"{x} {y}")
-
+    print(*get_gold(num))
