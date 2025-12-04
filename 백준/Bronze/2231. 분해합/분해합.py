@@ -13,7 +13,7 @@ def dsum(n):
 
 
 res = 0
-for i in range(1, n):
+for i in range(max(1, n - 9 * len(str(n))), n):
     if dsum(i) == n:
         res = i
         break
