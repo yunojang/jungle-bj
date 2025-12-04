@@ -5,7 +5,11 @@ n = int(input())
 
 
 def dsum(n):
-    return n + sum(map(int, str(n)))
+    s = n
+    while n:
+        s += n % 10
+        n //= 10
+    return s
 
 
 res = 0
