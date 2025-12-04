@@ -1,14 +1,15 @@
-# def d(n):
-#     return n + sum(map(int, str(n)))
+def d(n):
+    return n + sum(map(int, str(n)))
 
 
-def is_selfn(n):
-    for s in range(1, min(n, len(str(n)) * 9 + 1)):
-        if s == sum(map(int, str(n - s))):
-            return False
-    return True
+limit = 10000
+made = [False] * (limit + 1)
 
+for x in range(1, limit + 1):
+    val = d(x)
+    if val <= limit:
+        made[val] = True
 
-for i in range(1, 10001):
-    if is_selfn(i):
-        print(i)
+for x in range(1, limit + 1):
+    if not made[x]:
+        print(x)
