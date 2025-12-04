@@ -1,5 +1,9 @@
-def d(n):
-    return n + sum(map(int, str(n)))
+def d(n: int) -> int:
+    s = n
+    while n:
+        s += n % 10
+        n //= 10
+    return s
 
 
 limit = 10000
