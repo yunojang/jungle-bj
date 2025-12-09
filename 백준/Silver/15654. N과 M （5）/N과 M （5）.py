@@ -6,17 +6,21 @@ nums = list(map(int, input().split()))
 nums.sort()
 
 
-def dfs(selected, depth=0):
+def dfs(selected, visited, depth=0):
     if depth == m:
-        print(" ".join(map(lambda i: str(nums[i]), selected)))
+        print(" ".join(selected))
         return
 
     for i in range(0, n):
-        if i in selected:
+        if visited[i]:
             continue
-        selected.append(i)
-        dfs(selected, depth + 1)
+        selected.append(str(nums[i]))
+        visited[i] = True
+        dfs(selected, visited, depth + 1)
         selected.pop()
+        visited[i] = False
 
 
-dfs([])
+visited = [False] * n
+
+dfs([], visited)
