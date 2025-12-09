@@ -4,12 +4,14 @@ input = sys.stdin.readline
 n, m = tuple(map(int, input().split()))
 
 
-def dfs(nums=[], depth=0):
+def dfs(nums, depth=0):
     if depth == m:
-        print(*nums)
+        print(' '.join(map(str,nums)))
         return
     for i in range(nums[-1] if nums else 1, n + 1):
-        dfs([*nums, i], depth + 1)
+        nums.append(i)
+        dfs(nums, depth + 1)
+        nums.pop()
 
 
-dfs()
+dfs([])
