@@ -1,24 +1,26 @@
+import sys
+import math
+
+input = sys.stdin.readline
 n = int(input())
 nums = list(map(int, input().split()))
-
 nums.sort()
+
+diff_min = math.inf
+diff_l, diff_r = None, None
 
 l = 0
 r = n - 1
 
-min_abs = float("inf")
-min_nums = None
-
 while l < r:
-    sum = nums[l] + nums[r]
-    if min_abs > abs(sum):
-        min_abs = abs(sum)
-        min_nums = (nums[l], nums[r])
+    s = nums[l] + nums[r]
+    if abs(diff_min) > abs(s):
+        diff_min = s
+        diff_l, diff_r = l, r
 
-    if sum > 0:
+    if s >= 0:
         r -= 1
     else:
         l += 1
 
-a, b = min_nums
-print(a, b)
+print(nums[diff_l], nums[diff_r])
