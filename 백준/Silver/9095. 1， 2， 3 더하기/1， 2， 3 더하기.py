@@ -1,13 +1,13 @@
 import sys
-n = int(sys.stdin.readline())
 
-def sum(n):
-    if n == 0:
-        return 1
-    if n < 0:
-        return 0
+input = sys.stdin.readline
+t = int(input())
+dp = [0] * 12
+dp[1], dp[2], dp[3] = 1, 2, 4
 
-    return sum(n-1) + sum(n-2) + sum(n-3)
-
-for _ in range(n):
-    print(sum(int(sys.stdin.readline())))
+for _ in range(t):
+    n = int(input())
+    for i in range(12):
+        if not dp[i]:
+            dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3]
+    print(dp[n])
